@@ -1,0 +1,42 @@
+create table flight
+(flightno int primary key auto_increment,
+source varchar(30),
+destination varchar(30),
+date varchar(30)
+);
+
+
+insert into flight(source,destination,date) values("pune","mumbai","2020-10-18"),
+("jalgaon","mumbai","2020-10-18"),
+("pune","jalgaon","2020-10-18"),
+("nashik","mumbai","2020-10-18"),
+("nashik","pune","2020-10-18");
+
+
+
+create table booking
+(	
+booking_id int(10) auto_increment primary key,	
+booked_seats int(10),	
+Dept_date date,	Time1 time,	
+flight_no varchar(20),	
+name varchar(20),	
+contactno varchar(10),	
+foreign key(flight_no) references flight(flightno)
+);
+
+
+DELIMITER //
+CREATE PROCEDURE UpdateData(num int,flight_no varchar(30))BEGIN
+declare x int(30);
+select bookedSeat into x from flight where flightno=flight_no;	
+set x=x + num;
+update flight set bookedSeat=x where flightno=flight_no;
+END //DELIMITER ;
+
+Delimiter //
+create procedure deleteData(flightno1 varchar(30))begin
+delete from booking where flight_no=flightno1;
+delete from flight where flightno=flightno1;
+end //delimeter ;
+
